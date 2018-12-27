@@ -22,7 +22,7 @@ const create = async (req, res) => {
 
 const getFamilies = async (req, res) => {
 
-  const { universe } = req.body;
+  const { universe } = req.parsed;
 
   let families;
   try {
