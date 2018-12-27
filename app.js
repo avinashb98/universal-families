@@ -1,7 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+
+// Routers
 const universeRouter = require('./src/routes/universe');
+const familyRouter = require('./src/routes/family');
 
 require('./config/db');
 
@@ -18,7 +21,6 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true
 }));
 
-
 // Router Initialization
 app.get('/v1', (req, res) => {
   res.status(200).json({
@@ -27,5 +29,6 @@ app.get('/v1', (req, res) => {
 });
 
 app.use('/v1/universe/', universeRouter);
+app.use('/v1/family/', familyRouter);
 
 module.exports = app;

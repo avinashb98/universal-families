@@ -7,7 +7,7 @@ const Person = db.define('person', {
     autoIncrement: true,
     primaryKey: true
   },
-  famId: {
+  family: {
     type: Sequelize.INTEGER
   },
   power: {

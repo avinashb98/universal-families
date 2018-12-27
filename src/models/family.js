@@ -7,11 +7,12 @@ const Family = db.define('family', {
     autoIncrement: true,
     primaryKey: true
   },
-  univId: {
+  universe: {
     type: Sequelize.INTEGER
   },
   totalPower: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 });
 
