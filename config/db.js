@@ -1,16 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('universal', 'root', 'openddoor', {
-  host: 'localhost',
-  dialect: 'mysql',
-  operatorsAliases: false,
-
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
-});
+const sequelize = new Sequelize(process.env.DB_URI);
 
 sequelize
   .authenticate()
@@ -20,3 +9,5 @@ sequelize
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
+
+module.exports = sequelize;
