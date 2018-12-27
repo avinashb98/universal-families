@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 // Routers
 const universeRouter = require('./src/routes/universe');
 const familyRouter = require('./src/routes/family');
+const personRouter = require('./src/routes/person');
 
 require('./config/db');
 
@@ -30,5 +31,6 @@ app.get('/v1', (req, res) => {
 
 app.use('/v1/universe/', universeRouter);
 app.use('/v1/family/', familyRouter);
+app.use('/v1/person/', personRouter);
 
 module.exports = app;
