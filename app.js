@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const universeRouter = require('./src/routes/universe');
 
 require('./config/db');
 
@@ -24,5 +25,7 @@ app.get('/v1', (req, res) => {
     msg: 'Welcome to Universal Families API'
   });
 });
+
+app.use('/v1/universe/', universeRouter);
 
 module.exports = app;

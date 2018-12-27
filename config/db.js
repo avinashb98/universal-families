@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+
 const sequelize = new Sequelize(process.env.DB_URI);
 
 sequelize
@@ -6,8 +7,15 @@ sequelize
   .then(() => {
     console.log('Connection has been established successfully.');
   })
-  .catch(err => {
+  .catch((err) => {
     console.error('Unable to connect to the database:', err);
+  });
+
+sequelize.sync({
+  force: false
+})
+  .then(() => {
+    console.log('success sync');
   });
 
 module.exports = sequelize;
