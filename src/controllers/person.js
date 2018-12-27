@@ -2,7 +2,7 @@ const Person = require('../models/person');
 
 const create = async (req, res) => {
 
-  const { family, power } = req.body;
+  const { family, power } = req.parsed;
 
   let person;
   try {
