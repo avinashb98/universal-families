@@ -1,11 +1,11 @@
 const Joi = require('joi');
 
-const getFamiliesSchema = Joi.object().keys({
+const createSchema = Joi.object().keys({
   universe: Joi.number().required()
 });
 
-const getFamilies = (req, res, next) => {
-  const { error, value } = getFamiliesSchema.validate(req.body);
+const create = (req, res, next) => {
+  const { error, value } = createSchema.validate(req.body);
 
   if (error) {
     res.status(400).json({
@@ -18,4 +18,4 @@ const getFamilies = (req, res, next) => {
   next();
 };
 
-module.exports = { getFamilies };
+module.exports = { create };

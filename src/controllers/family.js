@@ -2,7 +2,7 @@ const Family = require('../models/family');
 
 const create = async (req, res) => {
 
-  const { universe } = req.body;
+  const { universe } = req.parsed;
 
   let family;
   try {
