@@ -29,7 +29,13 @@ const mapFamiliesWithPower = families => new Promise((resolve, reject) => {
       const presentInUniverses = family.length;
       family
         .forEach(async (familyInUniverse, universeCount) => {
-          familyInUniverse.totalPower = await familyUtils.getTotalPower(familyInUniverse.id);
+          let totalPower;
+          try {
+            totalPower = await familyUtils.getTotalPower(familyInUniverse.id);
+          } catch (error) {
+            reject(error);
+          }
+          familyInUniverse = { ...familyInUniverse, totalPower };
           if (
             familyIndex === totalFamilies - 1
           && universeCount === presentInUniverses - 1
