@@ -7,6 +7,7 @@ const Person = db.define('person', {
     autoIncrement: true,
     primaryKey: true
   },
+  // Unique Id of the family person belongs to (same as 'id' in family)
   family: {
     type: Sequelize.INTEGER
   },
