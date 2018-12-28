@@ -21,7 +21,9 @@ const getUnbalancedFamilies = async (req, res) => {
       unbalancedFamilies,
       peopleToAdd
     } = await originUtils.getUnbalancedFamilies();
+
     const originUnbalanced = unbalancedFamilies.length > 0;
+
     res.status(200).json({
       message: (
         originUnbalanced
@@ -33,6 +35,7 @@ const getUnbalancedFamilies = async (req, res) => {
         peopleToAdd
       }
     });
+
   } catch (error) {
     console.log(error);
     res.status(400).json({

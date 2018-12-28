@@ -64,6 +64,10 @@ const isBalanced = (families) => {
   return true;
 };
 
+
+/**
+ * Returns a whether families are balanced accross universes
+ */
 const powerBalanced = async () => {
   let families;
   try {
@@ -85,7 +89,13 @@ const powerBalanced = async () => {
 
 };
 
+
+/**
+ * Find unbalanced families and operations to balance them
+ */
 const getUnbalancedFamilies = async () => {
+
+  // Get all families
   let families;
   try {
     families = await Family.findAll({});
@@ -93,6 +103,7 @@ const getUnbalancedFamilies = async () => {
     throw error;
   }
 
+  // Arrange families by familyIdentifier and Map them with respective powers
   let mappedFamilies;
   try {
     mappedFamilies = await mapFamiliesWithPower(
@@ -107,20 +118,32 @@ const getUnbalancedFamilies = async () => {
 
   for (const familyIdentifier in mappedFamilies) {
     const everySuchFamily = mappedFamilies[familyIdentifier];
+
+    // Store the family with maximum power from same identifier families
     let maxPower = Number.MIN_SAFE_INTEGER;
     for (const family of everySuchFamily) {
       if (family.totalPower > maxPower) {
         maxPower = family.totalPower;
       }
     }
+
     const familyPushedToUnbalanced = false;
     for (const family of everySuchFamily) {
       if (family.totalPower !== maxPower) {
+
+        // Record the family identifier to be unbalanced
         if (!familyPushedToUnbalanced) {
           unbalancedFamilies.push({
             familyIdentifier
           });
         }
+
+        /**
+         * A person needs to be added to the family,
+         * who has power equal to the difference in power
+         * between the current family and the family with the
+         * maximum power
+         * */
         peopleToAdd.push({
           family: family.id,
           power: maxPower - family.totalPower
