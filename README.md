@@ -12,11 +12,11 @@
 
 ### Installation
 to install this project on your local system follow these steps -
-clone this repo: use `git clone https://github.com/avinashb98/universal-families.git`
-change directory: `cd universal-families`
-install npm modules: `npm install`
-create `.env` from `.env_sample`
-enter environment variable values in .env
+- clone this repo: use `git clone https://github.com/avinashb98/universal-families.git`
+- change directory: `cd universal-families`
+- install npm modules: `npm install`
+- create `.env` from `.env_sample`
+- enter environment variable values in .env
 
 ### Running the API
 * use command `npm start` to start the api
