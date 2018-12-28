@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const universeRouter = require('./src/routes/universe');
 const familyRouter = require('./src/routes/family');
 const personRouter = require('./src/routes/person');
-
+const originRouter = require('./src/routes/origin');
 require('./config/db');
 
 // Initializing express app
@@ -32,5 +32,6 @@ app.get('/v1', (req, res) => {
 app.use('/v1/universe/', universeRouter);
 app.use('/v1/family/', familyRouter);
 app.use('/v1/person/', personRouter);
+app.use('/v1/origin/', originRouter);
 
 module.exports = app;
