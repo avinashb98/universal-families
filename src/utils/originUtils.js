@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
 const Family = require('../models/family');
 const familyUtils = require('./familyUtils');
@@ -35,7 +36,7 @@ const mapFamiliesWithPower = families => new Promise((resolve, reject) => {
           } catch (error) {
             reject(error);
           }
-          familyInUniverse = { ...familyInUniverse, totalPower };
+          familyInUniverse.totalPower = totalPower;
           if (
             familyIndex === totalFamilies - 1
           && universeCount === presentInUniverses - 1
@@ -83,6 +84,54 @@ const powerBalanced = async () => {
 
 };
 
+const getUnbalancedFamilies = async () => {
+  let families;
+  try {
+    families = await Family.findAll({});
+  } catch (error) {
+    throw error;
+  }
+
+  let mappedFamilies;
+  try {
+    mappedFamilies = await mapFamiliesWithPower(
+      groupFamiliesByUniverse(families)
+    );
+  } catch (error) {
+    throw error;
+  }
+
+  const unbalancedFamilies = [];
+  const peopleToAdd = [];
+
+  for (const familyIdentifier in mappedFamilies) {
+    const everySuchFamily = mappedFamilies[familyIdentifier];
+    let maxPower = Number.MIN_SAFE_INTEGER;
+    for (const family of everySuchFamily) {
+      if (family.totalPower > maxPower) {
+        maxPower = family.totalPower;
+      }
+    }
+    const familyPushedToUnbalanced = false;
+    for (const family of everySuchFamily) {
+      if (family.totalPower !== maxPower) {
+        if (!familyPushedToUnbalanced) {
+          unbalancedFamilies.push({
+            familyIdentifier
+          });
+        }
+        peopleToAdd.push({
+          family: family.id,
+          power: maxPower - family.totalPower
+        });
+      }
+    }
+  }
+
+  return { unbalancedFamilies, peopleToAdd };
+};
+
 module.exports = {
-  powerBalanced
+  powerBalanced,
+  getUnbalancedFamilies
 };
