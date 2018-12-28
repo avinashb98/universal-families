@@ -1,4 +1,5 @@
 const Family = require('../models/family');
+const utils = require('../utils/familyUtils');
 
 const create = async (req, res) => {
 
@@ -27,6 +28,18 @@ const create = async (req, res) => {
 
 };
 
+const totalPower = async (req, res) => {
+  const { id } = req.body;
+  const power = await utils.getTotalPower(id);
+  res.status(200).json({
+    message: `Family ${id} Total Power`,
+    data: {
+      power
+    }
+  });
+};
+
 module.exports = {
-  create
+  create,
+  totalPower
 };

@@ -1,38 +1,5 @@
 const Joi = require('joi');
-const Universe = require('../../models/universe');
-const Family = require('../../models/family');
-
-// Check whether a universe exists
-const checkUniverse = async (id) => {
-  let universe;
-  try {
-    universe = await Universe.findOne({ where: { id } });
-  } catch (error) {
-    return false;
-  }
-  if (!universe) {
-    return false;
-  }
-  return true;
-};
-
-// Check for an existing family with same id
-const checkExistingFamily = async (universe, familyId) => {
-  let families;
-  try {
-    families = await Family.findAll({ where: { familyIdentifier: familyId, universe } });
-  } catch (error) {
-    console.log(error);
-    return true;
-  }
-
-  if (families.length > 0) {
-    return true;
-  }
-
-
-  return false;
-};
+const universeUtils = require('../../utils/universeUtils');
 
 // Input Schema
 const createSchema = Joi.object().keys({
@@ -53,7 +20,7 @@ const create = async (req, res, next) => {
   }
 
   // Cannot create family in a non-existent universe
-  const universeExists = await checkUniverse(value.universe);
+  const universeExists = await universeUtils.checkUniverse(value.universe);
   if (!universeExists) {
     res.status(404).json({
       message: 'Universe not Found. Create Universe First'
@@ -62,7 +29,11 @@ const create = async (req, res, next) => {
   }
 
   // Cannot have duplicate families in a universe
-  const existsFamilyWithId = await checkExistingFamily(value.universe, value.familyId);
+  const existsFamilyWithId = await universeUtils
+    .checkExistingFamily(
+      value.universe, value.familyId
+    );
+
   console.log(existsFamilyWithId);
   if (existsFamilyWithId) {
     res.status(401).json({
@@ -75,4 +46,8 @@ const create = async (req, res, next) => {
   next();
 };
 
-module.exports = { create };
+const totalPower = async (req, res, next) => {
+  next();
+};
+
+module.exports = { create, totalPower };
