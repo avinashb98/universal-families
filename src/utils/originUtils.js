@@ -36,6 +36,7 @@ const mapFamiliesWithPower = families => new Promise((resolve, reject) => {
           } catch (error) {
             reject(error);
           }
+          // eslint-disable-next-line no-param-reassign
           familyInUniverse.totalPower = totalPower;
           if (
             familyIndex === totalFamilies - 1
